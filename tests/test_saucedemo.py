@@ -62,3 +62,29 @@ def test_02_verificar_inventario(driver):
     nombre = productos[0].find_element(By.CLASS_NAME, "inventory_item_name").text
     precio = productos[0].find_element(By.CLASS_NAME, "inventory_item_price").text
     print(f"Primer producto: {nombre} | Precio: {precio}")
+
+
+def test_03_agregar_producto_al_carrito(driver):
+    iniciar_sesion(driver)
+    espera = WebDriverWait(driver, 15)
+    productos = espera.until(
+        EC.visibility_of_all_elements_located((By.CLASS_NAME, "inventory_item"))
+    )
+
+    primer_producto = productos[0]
+    nombre = primer_producto.find_element(By.CLASS_NAME, "inventory_item_name").text
+    primer_producto.find_element(By.TAG_NAME, "button").click()
+
+    contador = espera.until(
+        EC.visibility_of_element_located((By.CLASS_NAME, "shopping_cart_badge"))
+    )
+    assert contador.text == "1", "El contador del carrito debe mostrar 1"
+
+    driver.find_element(By.CLASS_NAME, "shopping_cart_link").click()
+    producto_carrito = espera.until(
+        EC.visibility_of_element_located((By.CLASS_NAME, "cart_item"))
+    )
+    nombre_carrito = producto_carrito.find_element(By.CLASS_NAME, "inventory_item_name").text
+    assert nombre_carrito == nombre, "El producto del carrito no coincide con el agregado"
+
+    print("Test OK: producto agregado al carrito")
