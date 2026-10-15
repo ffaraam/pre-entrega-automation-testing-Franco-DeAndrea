@@ -36,6 +36,7 @@ Las credenciales utilizadas son las de prueba publicadas por SauceDemo:
 ```text
 pre-entrega-automation-testing-Franco-DeAndrea/
 |-- tests/
+|   |-- conftest.py
 |   `-- test_saucedemo.py
 |-- utils/
 |   `-- helpers.py
@@ -47,6 +48,7 @@ pre-entrega-automation-testing-Franco-DeAndrea/
 ```
 
 - `tests/test_saucedemo.py`: contiene los tres tests y la fixture que crea y cierra el navegador.
+- `tests/conftest.py`: guarda capturas automaticas cuando falla una prueba y las incluye en el reporte HTML.
 - `utils/helpers.py`: contiene la funcion `iniciar_sesion`, reutilizada en los tests de inventario y carrito.
 - `reports/reporte.html`: guarda el reporte generado por Pytest.
 - `pytest.ini`: configura la carpeta de tests, las importaciones y la salida HTML.
@@ -122,4 +124,8 @@ En la ejecucion normal, Pytest captura los mensajes impresos y los incluye en el
 
 Los tres casos funcionales estan implementados. Cada test utiliza un navegador nuevo mediante una fixture con alcance de funcion y realiza su propio login. El navegador se cierra al finalizar cada prueba para evitar compartir estado entre tests.
 
-Actualmente no se generan archivos de log separados ni capturas automaticas ante fallos. La evidencia disponible es el reporte HTML y la salida capturada en el mismo.
+Cuando falla una prueba y el navegador esta disponible, se guarda una captura PNG en `reports/screenshots/` antes de cerrar Chrome. El nombre incluye el test, la etapa y la fecha para evitar sobrescribir capturas anteriores. La imagen tambien queda incluida en el reporte HTML autocontenido. La carpeta se crea automaticamente ante el primer fallo; si todas las pruebas pasan, no se generan capturas.
+
+Si el navegador no llega a iniciarse o deja de responder, puede no ser posible obtener una captura. Un error al capturar no oculta el fallo original de la prueba.
+
+Actualmente no se generan archivos de log separados. La salida de ejecucion se captura en el reporte HTML.
