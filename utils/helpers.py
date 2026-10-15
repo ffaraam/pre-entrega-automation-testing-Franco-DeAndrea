@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def iniciar_sesion(driver):
+    # Reutiliza el login y espera la redireccion antes de continuar con cada test.
     driver.get("https://www.saucedemo.com/")
     espera = WebDriverWait(driver, 15)
 

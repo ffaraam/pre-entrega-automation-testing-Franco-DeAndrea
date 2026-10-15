@@ -8,8 +8,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils.helpers import iniciar_sesion
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def driver():
+    # Crea un navegador para cada test y lo cierra al finalizar.
     servicio = Service(ChromeDriverManager().install())
     navegador = webdriver.Chrome(service=servicio)
 
@@ -21,6 +22,8 @@ def driver():
 
 
 def test_01_login(driver):
+
+    # Comprueba el acceso con credenciales validas y la llegada al inventario.
 
     driver.get("https://www.saucedemo.com/")
     espera = WebDriverWait(driver, 15)
@@ -41,6 +44,7 @@ def test_01_login(driver):
     print("Test OK: login exitoso")
 
 def test_02_verificar_inventario(driver):
+    # Espera la carga del catalogo antes de validar sus titulos y controles.
     iniciar_sesion(driver)
     espera = WebDriverWait(driver, 15)
     productos = espera.until(
@@ -65,6 +69,7 @@ def test_02_verificar_inventario(driver):
 
 
 def test_03_agregar_producto_al_carrito(driver):
+    # Guarda el nombre del producto para comprobarlo luego dentro del carrito.
     iniciar_sesion(driver)
     espera = WebDriverWait(driver, 15)
     productos = espera.until(
