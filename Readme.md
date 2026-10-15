@@ -43,6 +43,7 @@ pre-entrega-automation-testing-Franco-DeAndrea/
 |-- reports/
 |   `-- reporte.html
 |-- pytest.ini
+|-- requirements.txt
 |-- .gitignore
 `-- Readme.md
 ```
@@ -52,6 +53,7 @@ pre-entrega-automation-testing-Franco-DeAndrea/
 - `utils/helpers.py`: contiene la funcion `iniciar_sesion`, reutilizada en los tests de inventario y carrito.
 - `reports/reporte.html`: guarda el reporte generado por Pytest.
 - `pytest.ini`: configura la carpeta de tests, las importaciones y la salida HTML.
+- `requirements.txt`: lista las dependencias directas y sus versiones utilizadas en el proyecto.
 - `.gitignore`: excluye el entorno virtual y los archivos de cache.
 
 No se utiliza una carpeta `datos/` porque las pruebas no leen archivos de datos externos.
@@ -83,10 +85,10 @@ Los siguientes comandos estan preparados para Windows con PowerShell.
 3. Instalar las dependencias dentro del entorno:
 
    ```powershell
-   .\.venv\Scripts\python.exe -m pip install pytest selenium webdriver-manager pytest-html
+   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
    ```
 
-Se utiliza directamente el Python del entorno virtual, por lo que no es necesario activarlo. Actualmente el proyecto no incluye un archivo `requirements.txt`.
+Se utiliza directamente el Python del entorno virtual, por lo que no es necesario activarlo. El archivo `requirements.txt` fija las versiones de las dependencias directas utilizadas en la ejecucion verificada. Sus dependencias adicionales se instalan automaticamente con pip.
 
 ## Ejecucion
 
